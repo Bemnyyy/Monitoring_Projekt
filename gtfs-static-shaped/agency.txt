@@ -1,0 +1,15 @@
+agency_id,agency_name,agency_url,agency_timezone,agency_lang,agency_phone,agency_fare_url,agency_email
+de:vpe:agency:1,Müller-Reisen GmbH & Co. KG,https://www.vpe.de/service-kontakt/verkehrsunternehmen/,Europe/Berlin,de,+49 (7231) 92 26 60,https://www.vpe.de/,info@muellerreisen-pf.de
+de:vpe:agency:10,Seiz Reisen GmbH,https://www.vpe.de/service-kontakt/verkehrsunternehmen/,Europe/Berlin,de,+49 (7042) 911 1722,https://www.vpe.de/,seiz@eberhardt-reisen.de
+de:vpe:agency:11,SWEG Bus Pforzheim GmbH,https://www.vpe.de/service-kontakt/verkehrsunternehmen/,Europe/Berlin,de,+49 (7821) 996 0770,https://www.vpe.de/,info@sweg.de
+de:vpe:agency:12,Seitter Shuttle + Tour GmbH,https://www.vpe.de/service-kontakt/verkehrsunternehmen/,Europe/Berlin,de,+49 (7044) 944055,https://www.vpe.de/,info@seitterbus.de
+de:vpe:agency:13,Bürgerbus Maulbronn,https://www.buergerbus-maulbronn.de/,Europe/Berlin,de,+49 (7041) 814 7252,https://www.vpe.de/,info@buergerbus-maulbronn.de
+de:vpe:agency:14,Bürgerbus Wiernsheim,https://www.bürgerbus-wiernsheim.de/,Europe/Berlin,de,+49 (7041) 983 7241,https://www.vpe.de/,info@bürgerbus-wiernsheim.de
+de:vpe:agency:2,Binder Reisen GmbH,https://www.vpe.de/service-kontakt/verkehrsunternehmen/,Europe/Berlin,de,+49 (711) 13 96 50,https://www.vpe.de/,info@binder-reisen.de
+de:vpe:agency:3,Richard Eberhardt GmbH,https://www.vpe.de/service-kontakt/verkehrsunternehmen/,Europe/Berlin,de,+49 (7082) 790 0,https://www.vpe.de/,info@eberhardt-reisen.de
+de:vpe:agency:4,Klingel GmbH Omnibusverkehr & Reisen,https://www.vpe.de/service-kontakt/verkehrsunternehmen/,Europe/Berlin,de,+49 (7033) 53 94 50,https://www.vpe.de/,info@klingel-reisen.de
+de:vpe:agency:5,Omnibusverkehr Engel GmbH,https://www.vpe.de/service-kontakt/verkehrsunternehmen/,Europe/Berlin,de,+49 (7041) 65 65,https://www.vpe.de/,info@omnibus-engel.de
+de:vpe:agency:6,Friedrich Müller Omnibusunternehmen GmbH,https://www.vpe.de/service-kontakt/verkehrsunternehmen/,Europe/Berlin,de,+49 (7231) 443 1474,https://www.vpe.de/,info@fmobus.de
+de:vpe:agency:7,RVS Regionalbusverkehr Südwest GmbH,https://www.vpe.de/service-kontakt/verkehrsunternehmen/,Europe/Berlin,de,+49 (7231) 443 1474,https://www.vpe.de/,pforzheimfaehrtbus@deutschebahn.com
+de:vpe:agency:8,Wolf Reisen GmbH,https://www.vpe.de/service-kontakt/verkehrsunternehmen/,Europe/Berlin,de,+49 (7233) 42 31,https://www.vpe.de/,info@wolf-reisen.com
+de:vpe:agency:9,Reisebüro Wöhrle GmbH,https://www.vpe.de/service-kontakt/verkehrsunternehmen/,Europe/Berlin,de,+49 (7045) 3063,https://www.vpe.de/,omnibus@woehrle-reisen.de
