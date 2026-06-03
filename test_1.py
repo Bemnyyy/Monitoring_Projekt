@@ -1,10 +1,5 @@
 # this is test so see how i can extract the given data to display them
 
-import os
-from dotenv import load_dotenv
+from gtfs_processing import load_gtfs_data(gtfs_path)
 
-load_dotenv()
-
-gtfs_path = os.getenv("GTFS")
-gtfsrt = os.getenv("GTFS-Rt")
-
+print(load_gtfs_data(gtfs_path))
