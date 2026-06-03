@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import networkx
 from dotenv import load_dotenv
-from load_dotenv import gtfs_path, gtfs_rt_path
+from load_dotenv import gtfs_path, 
 
 load_dotenv(gtfs_path)
 #gtfs_realtime = os.getenv("GTFS-RT")
