@@ -5,7 +5,8 @@ from load_dotenv import gtfs_rt_path
 
 load_dotenv(gtfs_rt_path)
 
-feed = gtfs_realtime_pb2.FeedMessage()
+
+feed = gtfs_realtime_pb2.DESCRIPTOR.FeedMessage()
 response = requests.get(gtfs_rt_path)
 feed.ParseFromString(response.content)
 for entity in feed.entity:
