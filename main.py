@@ -1,7 +1,7 @@
 import time
 import schedule
 from realtime_scraper import fetch_gtfs_rt, get_and_clear_daily_data
-from analyzier import process_daily_data
+from analyzer import process_daily_data
 
 def nightly_job():
     # Works on the previous day, runs at night
@@ -15,7 +15,7 @@ schedule.every().day.at("03:00").do(nightly_job)
 if __name__ == "__main__":
     print("--- ÖPNV Monitoring System gestartet ---")
 
-    # MANUELLER TESTLAUF 
+    # MANUELLER TESTLAUF AKTIV BIS ECHTZEIT DATEN VON BODO VORHANDEN SIND
     # ===========================================
     #fetch_gtfs_rt()
     nightly_job()
