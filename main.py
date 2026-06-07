@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     # MANUELLER TESTLAUF 
     # ===========================================
-    fetch_gtfs_rt()
+    #fetch_gtfs_rt()
     nightly_job()
     print("Manueller Testlauf abgeschlossen.")
     # ===========================================
