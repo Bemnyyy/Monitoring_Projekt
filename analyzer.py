@@ -47,6 +47,8 @@ def process_daily_data(rt_data_list):
     df_fahrten["RT_vorhanden"] = df_fahrten["RT_vorhanden"].fillna(False)
     df_fahrten["fahrtausfall"] = (df_fahrten["trip_status"] == "3") | (~df_fahrten["RT_vorhanden"] & df_fahrten["static_vkm"].notna())
     df_fahrten["zusatzfahrt"] = (df_fahrten["trip_status"] == "1") | (df_fahrten["static_vkm"].isna() & df_fahrten["RT_vorhanden"])
+    df_fahrten.loc[df_fahrten["delay_seconds"] > 86400, "delay_seconds"] = 0
+    df_fahrten.loc[df_fahrten["delay_seconds"] <-86400, "delay_seconds"] = 0
     df_fahrten.loc[~df_fahrten["fahrtausfall"], "abweichungen_minuten"] = df_fahrten["delay_seconds"] / 60
     df_fahrten["ist_fahrplanminuten"] = df_fahrten["soll_fahrplanminuten"] + df_fahrten["abweichungen_minuten"]
     df_fahrten.loc[df_fahrten["fahrtausfall"], "ist_fahrplanminuten"] = 0
@@ -82,6 +84,8 @@ def process_daily_data(rt_data_list):
     # 2. Additional Stop; the stop does not have a static stop sequence but appear in the realtime-data
     df_halte["zusatzhalt"] = df_halte["stop_sequence"].isna() & df_halte["RT_vorhanden"]
     # 3. delay per stop
+    df_halte.loc[df_halte["delay_seconds"] > 86400, "delay_seconds"] = 0
+    df_halte.loc[df_halte["delay_seconds"] < -86400, "delay_seconds"] = 0
     df_halte["verspaetung_minuten"] = df_halte["delay_seconds"] / 60
     # clean up columns
     export_cols_halte = [
