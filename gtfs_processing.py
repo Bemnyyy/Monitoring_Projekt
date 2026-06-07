@@ -1,7 +1,7 @@
 #import os
 import pandas as pd
 #from dotenv import load_dotenv
-from load_dotenv import gtfs_path
+from config import gtfs_path
 
 #load_dotenv(gtfs_path)
 #gtfs_realtime = os.getenv("GTFS-RT")

@@ -1,5 +1,7 @@
 .env
 *.pdf
-__pycache__
+*.csv
+*.zip
 gtfs-google
 GTFS-VPE
+*.pyc
