@@ -74,7 +74,7 @@ def process_daily_data(rt_data_list):
         'static_vkm', 'ist_vkm', 'soll_pkm', 'ist_pkm'
     ]
     path_fahrten = f"{export_dir}Monitoring_fahrten_{yesterday.strftime('%Y-%m-%d')}.csv"
-    df_fahrten[export_cols_fahrten].round(2).to_csv(path_fahrten, index=False, sep=";", decimal=",")
+    df_fahrten[export_cols_fahrten].round(2).to_csv(path_fahrten, index=False, sep=";", decimal=",", encoding="utf-8-sig")
 
 
 
@@ -111,7 +111,7 @@ def process_daily_data(rt_data_list):
     path_halte = f"{export_dir}Monitoring_halte_{yesterday.strftime('%Y-%m-%d')}.csv"
     # sort by route and stop_sequence
     df_halte = df_halte.sort_values(by=['route_id', 'trip_id', 'stop_sequence'])
-    df_halte[export_cols_halte].round(2).to_csv(path_halte, index=False, sep=";", decimal=",")
+    df_halte[export_cols_halte].round(2).to_csv(path_halte, index=False, sep=";", decimal=",", encoding="utf-8-sig")
 
     print(f"===== EXPORT ABGESCHLOSSEN =====")
     print(f"1. Fahrten-Level exportiert nach: {path_fahrten}")
