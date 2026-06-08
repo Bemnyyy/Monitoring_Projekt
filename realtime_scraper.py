@@ -3,7 +3,7 @@ import sqlite3
 import requests
 from datetime import datetime
 from google.transit import gtfs_realtime_pb2
-from config import gtfs_rt_path, HEADERS  # Achte darauf, wie deine Variablen in der config.py heißen!
+from config import gtfs_rt_path, HEADERS
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, "bodo_rt_data.db")

@@ -16,7 +16,14 @@ def load_static_data(target_date):
 def process_daily_data(rt_data_list):
     yesterday = datetime.now().date() - timedelta(days=1)
     feed = load_static_data(yesterday)
+    #merge basic static data
     static_df = pd.merge(feed.stop_times, feed.trips, on="trip_id")
+
+    # adding stop names to the feed
+    if hasattr(feed, "stops") and not feed.stops.empty:
+        static_df = pd.merge(static_df, feed.stops[["stop_id", "stop_name"]], on="stop_id", how="left")
+    else:
+        static_df["stop_name"] = "Unbekannter Name"
 
     if "shape_dist_traveled" in static_df.columns:
         static_df["shape_dist_traveled"] = static_df["shape_dist_traveled"] / umrechnungsfaktor_km
@@ -37,6 +44,10 @@ def process_daily_data(rt_data_list):
     
     static_metrics["soll_fahrplanminuten"] = (static_metrics["static_end"] - static_metrics["static_start"]) / 60
 
+    if hasattr(feed, "routes") and not feed.routes.empty:
+        routes_df = feed.routes[["route_id", "route_short_name", "route_long_name", "route_type"]]
+        static_metrics = pd.merge(static_metrics, routes_df, on="route_id", how="left")
+
     # keeping only the last trip update
     if not df_rt.empty:
         df_rt_trips = df_rt.sort_values("timestamp").drop_duplicates(subset=["trip_id"], keep="last")
@@ -56,17 +67,18 @@ def process_daily_data(rt_data_list):
     df_fahrten["ist_pkm"] = df_fahrten["ist_vkm"] * capacity_utilization_rate
 
     export_cols_fahrten = [
-        'trip_id', 'route_id', 'RT_vorhanden', 'fahrtausfall', 'zusatzfahrt', 
+        'trip_id', 'route_id', 'route_short_name', 'route_long_name', 'route_type', 'RT_vorhanden', 'fahrtausfall', 'zusatzfahrt', 
         'soll_fahrplanminuten', 'ist_fahrplanminuten', 'abweichungen_minuten', 
         'static_vkm', 'ist_vkm', 'soll_pkm', 'ist_pkm'
     ]
-    path_fahrten = f"{export_dir}_monitoring_fahrten_{yesterday.strftime('%Y-%m-%d')}.csv"
-    df_fahrten[export_cols_fahrten].round(2).to_csv(path_fahrten, index=False, sep=";")
+    path_fahrten = f"{export_dir}Monitoring_fahrten_{yesterday.strftime('%Y-%m-%d')}.csv"
+    df_fahrten[export_cols_fahrten].round(2).to_csv(path_fahrten, index=False, sep=";", decimal=",")
+
+
 
     print("Berechne Haltestellen-Level KPIs...")
-    
     # code for getting the csv for the stops
-    static_stops = static_df[['trip_id', 'route_id', 'stop_id', 'stop_sequence', 'departure_time']].copy()
+    static_stops = static_df[['trip_id', 'route_id', 'stop_id', 'stop_name', 'stop_sequence', 'departure_time']].copy()
 
     # keeping the last updated trip for every stop
     if not df_rt.empty:
@@ -85,17 +97,17 @@ def process_daily_data(rt_data_list):
     df_halte["verspaetung_minuten"] = df_halte["delay_seconds"] / 60
     # clean up columns
     export_cols_halte = [
-        'trip_id', 'route_id', 'stop_id', 'stop_sequence', 'RT_vorhanden', 
+        'trip_id', 'route_id', 'stop_id', 'stop_name', 'stop_sequence', 'RT_vorhanden', 
         'haltausfall', 'zusatzhalt', 'verspaetung_minuten'
     ]
     # Ensuring that all columns for the export are present (to prevent a crash in the event of a complete absence of realtime-data)
     for col in export_cols_halte:
         if col not in df_halte.columns:
             df_halte[col] = None
-    path_halte = f"{export_dir}_monitoring_halte_{yesterday.strftime('%Y-%m-%d')}.csv"
-    # Nach Route und Stop_Sequence sortieren für saubere Lesbarkeit
+    path_halte = f"{export_dir}Monitoring_halte_{yesterday.strftime('%Y-%m-%d')}.csv"
+    # sort by route and stop_sequence
     df_halte = df_halte.sort_values(by=['route_id', 'trip_id', 'stop_sequence'])
-    df_halte[export_cols_halte].round(2).to_csv(path_halte, index=False, sep=";")
+    df_halte[export_cols_halte].round(2).to_csv(path_halte, index=False, sep=";", decimal=",")
 
     print(f"===== EXPORT ABGESCHLOSSEN =====")
     print(f"1. Fahrten-Level exportiert nach: {path_fahrten}")

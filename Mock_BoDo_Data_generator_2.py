@@ -4,8 +4,9 @@ import random
 import pandas as pd
 import partridge as ptg
 from datetime import datetime
+from config import gtfs_path
 
-GTFS_STATIC_PATH = "C:/Users/benja/Documents/4. Semester/VSMB 430 - Softwareentwicklung/Projekt/Projekt/GTFS-BODO" 
+GTFS_STATIC_PATH = gtfs_path
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, "bodo_rt_data.db")
 
@@ -54,6 +55,7 @@ def create_mock_live_data():
     ''')
     conn.commit()
     cursor.execute("DELETE FROM rt_updates")
+    print("Alte Tabelle gelöscht!")
     cursor.executemany('''
         INSERT INTO rt_updates 
         (timestamp, trip_id, trip_status, stop_id, stop_status, delay_seconds)
