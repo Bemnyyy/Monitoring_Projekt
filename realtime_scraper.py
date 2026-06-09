@@ -29,10 +29,16 @@ init_db()
 
 def fetch_gtfs_rt():
     try:
-        response = requests.get(gtfs_rt_path, headers=HEADERS)
-        response.raise_for_status()
         feed = gtfs_realtime_pb2.FeedMessage()
-        feed.ParseFromString(response.content)
+        # url vs local path for realtime data
+        if gtfs_rt_path.startswith("http"):
+            response = requests.get(gtfs_rt_path, headers=HEADERS)
+            response.raise_for_status()
+            feed.ParseFromString(response.content)
+        else:
+            with open(gtfs_rt_path, "rb") as f:
+                feed.ParseFromString(f.read())
+        
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         updates_to_insert = []
         

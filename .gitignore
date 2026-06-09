@@ -2,8 +2,11 @@
 *.pdf
 *.csv
 *.zip
-gtfs-google
-GTFS-VPE
 *.pyc
 *.db
-gtfs_processing.py
+bodo
+*.pb
+test_pb.py
+.vscode
+.venv
+__pycache__
