@@ -23,13 +23,15 @@
 
    Erstelle eine `.env`-Datei im Hauptverzeichnis mit folgenden Pfaden:
 
-   *GTFS* = "Pfad zu den GTFS-Daten"
+   *GTFS*="Pfad zu den GTFS-Daten"
    
-   *GTFS-RT* = "Link zu den zugehörigen GTFS-RT Daten"
+   *GTFS-RT*="Link zu den zugehörigen GTFS-RT Daten" oder "Pfad zur Protocoll Buffer (.pb) Datei"
 
-   *API_KEY* = "API Key für Realtime Abfragen" (falls benötigt, kann auch weggelassen werden)
+   *API_KEY*="API Key für Realtime Abfragen" (falls benötigt, kann auch weggelassen werden)
 
-   *EXPORT_DIR* = Pfad zum Speichern der exportierten CSV-Dateien
+   *EXPORT_DIR*=Pfad zum Speichern der exportierten CSV-Dateien
+
+   #### WICHTIG: In der .env-Datei keine Leerzeichen vor und hinter den "=".
 
 4. System starten
    `python main.py`
