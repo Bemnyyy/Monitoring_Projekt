@@ -10,3 +10,4 @@ test_pb.py
 .vscode
 .venv
 __pycache__
+*.docx
