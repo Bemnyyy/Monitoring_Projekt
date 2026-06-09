@@ -3,7 +3,7 @@ import sqlite3
 import requests
 from datetime import datetime
 from google.transit import gtfs_realtime_pb2
-from config import gtfs_rt_path, HEADERS
+from config import GTFS_RT_PATH, HEADERS
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, "bodo_rt_data.db")
@@ -31,12 +31,12 @@ def fetch_gtfs_rt():
     try:
         feed = gtfs_realtime_pb2.FeedMessage()
         # url vs local path for realtime data
-        if gtfs_rt_path.startswith("http"):
-            response = requests.get(gtfs_rt_path, headers=HEADERS)
+        if GTFS_RT_PATH.startswith("http"):
+            response = requests.get(GTFS_RT_PATH, headers=HEADERS)
             response.raise_for_status()
             feed.ParseFromString(response.content)
         else:
-            with open(gtfs_rt_path, "rb") as f:
+            with open(GTFS_RT_PATH, "rb") as f:
                 feed.ParseFromString(f.read())
         
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

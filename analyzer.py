@@ -1,17 +1,14 @@
 import pandas as pd
 import partridge as ptg
 from datetime import datetime, timedelta
-from config import export_dir, gtfs_path
-
-capacity_utilization_rate = 0.20 # 20% average load factor for PKM
-umrechnungsfaktor_km = 1000      # the gtfs data is using meter, so we divide by 1000 to get kilometers
+from config import EXPORT_DIR, GTFS_PATH, capacity_utilization_rate, conversion_factor_km
 
 def load_static_data(target_date):
     # Loading static GTFS Data for BoDo
-    print(f"Lade Soll-Daten aus {gtfs_path} für {target_date}...")
-    service_ids = list(ptg.read_service_ids_by_date(gtfs_path).values())[0]
+    print(f"Lade Soll-Daten aus {GTFS_PATH} für {target_date}...")
+    service_ids = list(ptg.read_service_ids_by_date(GTFS_PATH).values())[0]
     view = {"trips.txt": {"service_id": service_ids}}
-    return ptg.load_feed(gtfs_path, view)
+    return ptg.load_feed(GTFS_PATH, view)
 
 def process_daily_data(rt_data_list):
     yesterday = datetime.now().date() - timedelta(days=1)
@@ -26,7 +23,7 @@ def process_daily_data(rt_data_list):
         static_df["stop_name"] = "Unbekannter Name"
 
     if "shape_dist_traveled" in static_df.columns:
-        static_df["shape_dist_traveled"] = static_df["shape_dist_traveled"] / umrechnungsfaktor_km
+        static_df["shape_dist_traveled"] = static_df["shape_dist_traveled"] / conversion_factor_km
 
     # preparing realtime data
     if not rt_data_list:
@@ -34,6 +31,8 @@ def process_daily_data(rt_data_list):
     else:
         df_rt = pd.DataFrame(rt_data_list)
         df_rt["RT_vorhanden"] = True
+    
+    
     print("Berechne Fahrten-Level KPIs...")
     # overview trips
     static_metrics = static_df.groupby(["trip_id", "route_id"]).agg(
@@ -73,7 +72,7 @@ def process_daily_data(rt_data_list):
         'soll_fahrplanminuten', 'ist_fahrplanminuten', 'abweichungen_minuten', 
         'static_vkm', 'ist_vkm', 'soll_pkm', 'ist_pkm'
     ]
-    path_fahrten = f"{export_dir}Monitoring_fahrten_{yesterday.strftime('%Y-%m-%d')}.csv"
+    path_fahrten = f"{EXPORT_DIR}Monitoring_fahrten_{yesterday.strftime('%Y-%m-%d')}.csv"
     df_fahrten[export_cols_fahrten].round(2).to_csv(path_fahrten, index=False, sep=";", decimal=",", encoding="utf-8-sig")
 
 
@@ -108,7 +107,7 @@ def process_daily_data(rt_data_list):
     for col in export_cols_halte:
         if col not in df_halte.columns:
             df_halte[col] = None
-    path_halte = f"{export_dir}Monitoring_halte_{yesterday.strftime('%Y-%m-%d')}.csv"
+    path_halte = f"{EXPORT_DIR}Monitoring_halte_{yesterday.strftime('%Y-%m-%d')}.csv"
     # sort by route and stop_sequence
     df_halte = df_halte.sort_values(by=['route_id', 'trip_id', 'stop_sequence'])
     df_halte[export_cols_halte].round(2).to_csv(path_halte, index=False, sep=";", decimal=",", encoding="utf-8-sig")
