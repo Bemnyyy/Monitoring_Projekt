@@ -33,5 +33,8 @@
 
    #### WICHTIG: In der .env-Datei keine Leerzeichen vor und hinter den "=".
 
-4. System starten
+3. System starten
    `python main.py`
+
+4. Dashboard starten
+   `streamlit run dashboard.py`
